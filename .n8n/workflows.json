@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "name": "Extract Leads from Email",
+    "nodes": [
+      {
+        "parameters": {
+          "mailbox": "INBOX"
+        },
+        "id": "EmailTrigger",
+        "name": "IMAP Email Trigger",
+        "type": "n8n-nodes-base.imapEmail",
+        "typeVersion": 1,
+        "position": [250, 300],
+        "credentials": {
+          "imap": "imap_cred_1"
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "operation": "create",
+          "additionalFields": {
+            "name": "={{ $json.subject }}",
+            "email_from": "={{ $json.from }}",
+            "description": "={{ $json.text }}"
+          }
+        },
+        "id": "CreateLead",
+        "name": "Odoo",
+        "type": "n8n-nodes-base.odoo",
+        "typeVersion": 1,
+        "position": [500, 300],
+        "credentials": {
+          "odooApi": "odoo_cred_1"
+        }
+      }
+    ],
+    "connections": {
+      "EmailTrigger": {
+        "main": [
+          [
+            {
+              "node": "CreateLead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  }
+]
