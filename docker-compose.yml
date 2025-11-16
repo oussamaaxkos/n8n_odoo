@@ -14,7 +14,7 @@ services:
       - N8N_PORT=5678
       - NODE_ENV=development
     volumes:
-      - C:/n8n_odoo_test/.n8n:/home/node/.n8n
+      - ./.n8n:/home/node/.n8n
 
   odoo:
     image: odoo:16.0
@@ -27,7 +27,7 @@ services:
       - USER=odoo
       - PASSWORD=odoo
     volumes:
-      - C:/n8n_odoo_test/odoo_filestore:/var/lib/odoo/filestore
+      - ./odoo_filestore:/var/lib/odoo/filestore
 
   db:
     image: postgres:15
@@ -36,4 +36,4 @@ services:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
     volumes:
-      - C:/n8n_odoo_test/pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
